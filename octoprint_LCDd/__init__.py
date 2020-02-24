@@ -255,7 +255,7 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
     def on_after_startup(self):
         lcd = self.lcd
-        self._logger.info("plugin initialized !")
+        self._logger.info("plugin initialized!")
 
 
     def on_print_progress(self,storage,path,progress):
@@ -279,7 +279,7 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
         if progress==100 :
             self.JobIsDone(lcd)
 
-    def on_event(self,event,payload):
+    def on_event(self, event, payload):
         lcd = self.lcd
 
         if event in "Connected":
