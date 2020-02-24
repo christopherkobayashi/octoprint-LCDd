@@ -299,9 +299,6 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
                 lcd.clear(self.screen)
                 lcd.printline(self.screen, 0, 'Disconnected')
                 time.sleep(2)
-                lcd.clear(self.screen)
-                lcd.printline(self.screen, 0, 'Eco mode on')
-                time.sleep(5)
                 lcd.backlight(False)
 
             if payload["state_string"] in "Operational":
