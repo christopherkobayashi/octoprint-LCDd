@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 from octoprint.printer.estimation import PrintTimeEstimator
+import pylcdd
 import octoprint.plugin
 import octoprint.events
 import time
