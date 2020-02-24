@@ -214,6 +214,8 @@ class pyLCDd:
             "input",
             ]
 
+# LCDdPlugin class
+# Based on https://github.com/n3bojs4 by Milan Popovic
 
 class LCDdPlugin(octoprint.plugin.StartupPlugin,
                 octoprint.plugin.EventHandlerPlugin,
@@ -240,9 +242,10 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
             # init vars
             self.start_date = 0
+            lcd.printline(self.screen, 0, 'OctoPrint-LCDd')
+            lcd.printline(self.screen, 1, 'Version '+self._plugin_version)
 
     def JobIsDone(self,lcd):
-
         # create final anim
         self.birdy = [ '^_-' , '^_^', '-_^' , '^_^', '0_0', '-_-', '^_-', '^_^','@_@','*_*','$_$','<_<','>_>']
 
@@ -260,23 +263,21 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
     def on_print_progress(self,storage,path,progress):
         lcd = self.lcd
-        percent = int(progress/6.25)+1
+        percent = int ( progress / 6.25 ) + 1
         completed = '\x01' * percent
         lcd.printline(self.screen, 0, "Completed: "+str(progress)+"%")
 
-        if progress==1 :
-            self.start_date=time.time()
+        if progress == 1:
+            self.start_date = time.time()
 
-        if progress > 10 and progress < 100:
+        if progress < 100:
             now = time.time()
             elapsed = now - self.start_date
-            average=elapsed/(progress-1)
-            remaining=int((100-progress)*average)
-            remaining=str(datetime.timedelta(seconds=remaining))
-            #lcd.cursor_pos = (1,3)
-            lcd.printline(self.screen, 1, remaining)
-
-        if progress==100 :
+            average = elapsed / (progress - 1)
+            remaining = int( (100-progress)*average )
+            remaining = str( datetime.timedelta (seconds = remaining) )
+            lcd.printline(self.screen, 1, 'ETA: now + '+remaining[:-3] )
+        else:
             self.JobIsDone(lcd)
 
     def on_event(self, event, payload):
@@ -284,20 +285,23 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
         if event in "Connected":
             lcd.printline(self.screen, 0, 'Connected to:')
-            lcd.printline(self.screen, 1, payload["port"])
+            if payload["port"]:
+                lcd.printline(self.screen, 1, payload["port"])
+            else
+                lcd.printline(self.screen, 1, 'Unknown (BUG!)')
 
         if event in "Shutdown":
             lcd.clear(self.screen)
             lcd.printline(self.screen, 0, 'Shutting down')
             time.sleep(1)
             lcd.self.backlight(False)
-#            lcd.close()
+#           lcd.close()
 
         if event in "PrinterStateChanged":
 
             if payload["state_string"] in "Offline":
                 lcd.clear(self.screen)
-                lcd.printline(self.screen, 0, 'Disconnected')
+                lcd.printline(self.screen, 0, 'Offline')
                 time.sleep(2)
                 lcd.backlight(False)
 
