@@ -242,8 +242,10 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
             # init vars
             self.start_date = 0
-            lcd.printline(self.screen, 0, 'OctoPrint-LCDd')
-            lcd.printline(self.screen, 1, 'Version '+self._plugin_version)
+            self.lcd.printline(self.screen, 0, 'OctoPrint-LCDd')
+            #self.lcd.printline(self.screen, 1, 'Version '+self._plugin_version)
+            time.sleep(5)
+            self.lcd.backlight(False)
 
     def JobIsDone(self,lcd):
         # create final anim
@@ -282,23 +284,19 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
 
     def on_event(self, event, payload):
         lcd = self.lcd
+        self._logger.info(event)
 
         if event in "Connected":
-            lcd.printline(self.screen, 0, 'Connected to:')
-            if payload["port"]:
-                lcd.printline(self.screen, 1, payload["port"])
-            else
-                lcd.printline(self.screen, 1, 'Unknown (BUG!)')
+            lcd.backlight(True)
+            lcd.printline(self.screen, 0, 'Connected')
 
         if event in "Shutdown":
             lcd.clear(self.screen)
             lcd.printline(self.screen, 0, 'Shutting down')
             time.sleep(1)
-            lcd.self.backlight(False)
-#           lcd.close()
+            lcd.backlight(False)
 
         if event in "PrinterStateChanged":
-
             if payload["state_string"] in "Offline":
                 lcd.clear(self.screen)
                 lcd.printline(self.screen, 0, 'Offline')
@@ -311,22 +309,26 @@ class LCDdPlugin(octoprint.plugin.StartupPlugin,
                 lcd.printline(self.screen, 0, 'Operational')
 
             if payload["state_string"] in "Cancelling":
+                lcd.backlight(True)
                 lcd.clear(self.screen)
                 lcd.printline(self.screen, 0, 'Cancelling job')
                 time.sleep(0.2)
 
             if payload["state_string"] in "PrintCancelled":
+                lcd.backlight(True)
                 lcd.clear(self.screen)
                 time.sleep(0.5)
                 lcd.printline(self.screen, 0, 'Job cancelled')
                 time.sleep(2)
 
             if payload["state_string"] in "Paused":
+                lcd.backlight(True)
                 lcd.clear(self.screen)
                 time.sleep(0.5)
                 lcd.printline(self.screen, 0, 'Job paused')
 
             if payload["state_string"] in "Resuming":
+                lcd.backlight(True)
                 lcd.clear(self.screen)
                 lcd.printline(self.screen, 0, 'Job resuming')
                 time.sleep(0.2)
