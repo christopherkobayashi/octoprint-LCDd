@@ -1,28 +1,31 @@
-# OctoPrint-Lcd1602
+# OctoPrint-LCDd
 
-This plug-in allows you to control a 16X2 lcd display (hd44780 connected to port I2C) to display the octoprint status. It is useful for people like me who have a printer without a display.
-It indicates on which port the printer is connected, the progress of printing. It also displays the remaining print time (thanks to a simple method).
-This plugin has to evolve:
-- add options in the interface
-- new version for oled displays :)
+This plugin uses lcdproc to display OctoPrint status.  It is heavily based on OctoPrint-Lcd1602
+by Milan Popovic.
+
+It indicates on which port the printer is connected, the printing progress, and the
+remaining print time.
+
+Although this plugin was written for use with a 16x2 LCD display connected to the i2c
+bus via a hd44780 interface chip, this should work with any display supported by lcdproc.
 
 ## Setup
 
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 or manually using this URL:
 
-    https://github.com/n3bojs4/OctoPrint-Lcd1602/archive/master.zip
+    https://github.com/christopherkobayashi/octoprint-LCDd/archive/master.zip
 
-**MANUAL INSTALL:** 
+**MANUAL INSTALL:**
 
 clone the repo :
 
-`git clone https://github.com/n3bojs4/OctoPrint-Lcd1602.git  `
+`git clone https://github.com/christopherkobayashi/octoprint-LCDd.git  `
 
 install :
 
-`cd OctoPrint-Lcd1602 && python setup.py install`
+`cd OctoPrint-LCDd && python setup.py install`
 
 ## Configuration
 
-Nothing to do for the moment :D
+None.  All LCD interface configuration should be done via LCDd.conf
