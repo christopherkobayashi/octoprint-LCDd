@@ -41,7 +41,7 @@ plugin_url = "https://github.com/christopherkobayashi/octoprint-LCDd"
 plugin_license = "AGPLv3"
 
 # Any additional requirements besides OctoPrint should be listed here
-# plugin_requires = ["RPLCD", "smbus2", "fake-rpi"]
+ plugin_requires = []
 
 ### ------------------------------------------------------------------------------------------------
 ### More advanced options that you usually shouldn't have to touch follow after this point
