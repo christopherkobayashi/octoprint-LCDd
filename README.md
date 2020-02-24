@@ -24,7 +24,7 @@ clone the repo :
 
 install :
 
-`cd OctoPrint-LCDd && python setup.py install`
+`cd octoprint-LCDd && python setup.py install`
 
 ## Configuration
 
