@@ -3,7 +3,7 @@
 This plugin uses lcdproc to display OctoPrint status.  It is heavily based on OctoPrint-Lcd1602
 by Milan Popovic.
 
-It indicates on which port the printer is connected, the printing progress, and the
+It displays the printer port, the printing progress, and the
 remaining print time.
 
 Although this plugin was written for use with a 16x2 LCD display connected to the i2c
